@@ -1,0 +1,28 @@
+var products = [
+    { id: 1, variation: [
+        {color: "white", price: 12, discount: 10, size: [2,4,5]},
+        {color: "black", price: 12, discount: 10, size: [2,4,5]},
+        {color: "blue", price: 12, discount: 0, size: [2,4,5]}
+     ]},
+    { id: 2, variation: [
+        {color: "white", price: 12, discount: 0, size: [2,4,5]},
+        {color: "black", price: 12, discount: 5, size: [2,4,5]},
+        {color: "blue", price: 12, discount: 0, size: [2,4,5]}
+     ]},
+    { id: 3, variation: [
+        {color: "white", price: 12, discount: 14, size: [2,4,5]},
+        {color: "black", price: 12, discount: 0, size: [2,4,5]},
+        {color: "blue", price: 12, discount: 11, size: [2,4,5]}
+     ]},
+    { id: 4, variation: [
+        {color: "white", price: 12, discount: 9, size: [2,4,5]},
+        {color: "black", price: 12, discount: 10, size: [2,4,5]},
+        {color: "blue", price: 12, discount: 0, size: [2,4,5]}
+     ]},
+]
+
+var saleVariations = [];
+
+products.map (i => {
+    return i.variation.map(el => el.discount === 0 ? "" : saleVariations.push({id: i.id, variation: [{color: el.color, price: el.price, discount: el.discount}] })
+)})
