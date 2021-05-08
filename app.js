@@ -20,15 +20,15 @@ const app = express();
 // const env = "development";
 const env = "production";
 
-// app.use(cors());
+app.use(cors());
 
-app.use(
-  cors({
-    origin: env === "development" ? "http://localhost:4000" : "*",
-    credentials: "true",
-    exposedHeaders: ["set-cookie"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: env === "development" ? "http://localhost:4000" : "*",
+//     credentials: "true",
+//     exposedHeaders: ["set-cookie"],
+//   })
+// );
 
 // Parse Cookie Header
 // app.use(cookieParser());
