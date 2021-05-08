@@ -30,7 +30,7 @@ app.use(
   })
 );
 
-// Parse Cookie header
+// Parse Cookie Header
 // app.use(cookieParser());
 // Data sanitization against NoSQL query injection (clean characters: $, .)
 app.use(mongoSanitize());
