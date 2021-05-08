@@ -43,6 +43,15 @@ if (env === "development") app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+if (env === "production") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true })); // PWA HTTPS
+  app.use(express.static("client/build"));
+
+  app.get("/", function (req, res) {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/shops", shopRouter);
 app.use("/api/v1/users", userRouter);
@@ -56,14 +65,5 @@ app.all("*", (req, res, next) => {
 
 // Global Error Handler
 app.use(globalErrorHandler);
-
-if (env === "production") {
-  app.use(enforce.HTTPS({ trustProtoHeader: true })); // PWA HTTPS
-  app.use(express.static("client/build"));
-
-  app.get("/", function (req, res) {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
 
 module.exports = app;
