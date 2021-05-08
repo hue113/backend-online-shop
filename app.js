@@ -17,8 +17,10 @@ const globalErrorHandler = require("./controllers/errorController");
 
 const app = express();
 
-const env = "development";
-// const env = "production";
+// const env = "development";
+const env = "production";
+
+// app.use(cors());
 
 app.use(
   cors({

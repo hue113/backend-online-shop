@@ -18,30 +18,46 @@ exports.createOrder = catchAsync(async (req, res) => {
     })
   );
   const orderItemsIdsResolved = await orderItemsIds;
-  // console.log(orderItemsIdsResolved);
+
   const totalPrices = await Promise.all(
     orderItemsIdsResolved.map(async (orderItemId) => {
       const orderItem = await OrderItem.findById(orderItemId).populate(
         "product"
       );
-      const colorPrice = orderItem.product.variation.find(
+      console.log("orderItem", orderItem);
+      const chosenColor = await orderItem.product.variation.find(
         (el) => el.color === orderItem.color
-      ).price;
-      // const totalPrice = orderItem.product.price * orderItem.quantity;
-      const totalPrice = Number(colorPrice) * orderItem.quantity;
+      );
+      const totalPrice =
+        (Number(chosenColor.price) *
+          orderItem.quantity *
+          (100 - chosenColor.discount)) /
+        100;
       return totalPrice;
     })
   );
-  const total = totalPrices.reduce((a, b) => a + b, 0);
+  const subtotal = totalPrices.reduce((a, b) => a + b, 0);
+  const totalAfterShippingFee = subtotal >= 50 ? subtotal : subtotal + 5.18;
 
-  const order = await Order.create({
-    items: orderItemsIdsResolved,
-    shippingAddress: req.body.shippingAddress,
-    phone: req.body.phone,
-    total: total,
-    user: req.body.user,
-  });
+  let order;
+  if (req.body.user === "") {
+    order = await Order.create({
+      items: orderItemsIdsResolved,
+      shippingAddress: req.body.shippingAddress,
+      phone: req.body.phone,
+      total: totalAfterShippingFee,
+    });
+  } else {
+    order = await Order.create({
+      items: orderItemsIdsResolved,
+      shippingAddress: req.body.shippingAddress,
+      phone: req.body.phone,
+      total: totalAfterShippingFee,
+      user: req.body.user,
+    });
+  }
 
+  console.log(order);
   if (!order) return res.status(400).send("the order cannot be created!");
 
   res.send(order);

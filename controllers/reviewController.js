@@ -15,7 +15,10 @@ exports.createReview = catchAsync(async (req, res, next) => {
 // for admin to get reviews
 exports.getReviews = catchAsync(async (req, res, next) => {
   if (req.params.productId) {
-    const productReviews = await Review.find({ product: req.params.productId });
+    const productReviews = await Review.find({
+      product: req.params.productId,
+    }).sort({ createdAt: 1 });
+
     res.status(200).json({
       status: "success",
       results: productReviews.length,

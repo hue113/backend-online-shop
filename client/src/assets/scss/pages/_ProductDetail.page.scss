@@ -1,0 +1,110 @@
+.product-detail {
+  // 1. PRODUCT GALLERY (LEFT SIDE)
+  .product-image-gallery {
+    // resize navigation button (override library)
+    .image-gallery-left-nav .image-gallery-svg,
+    .image-gallery-right-nav .image-gallery-svg {
+      height: 70px;
+    }
+  }
+
+  // 2. PRODUCT MAIN INFORMATION (RIGHT SIDE)
+  .main-info {
+    .price {
+      font-size: 20px;
+      .old-price {
+        color: $color-text-3;
+        text-decoration: line-through;
+      }
+      .sale-price {
+        color: $global-color-4;
+      }
+    }
+    .line-break {
+      border-top: 1px solid rgba($color-text-3, 0.3);
+    }
+
+    .colorPick {
+      // color: $color-text-1;
+      .color-btn {
+        button {
+          border-color: $color-text-3;
+          background-color: $color-bg-1;
+          color: $color-text-1;
+          width: 80px;
+          height: 35px;
+        }
+        button,
+        .dropdown-item {
+          font-size: 15px;
+        }
+      }
+    }
+
+    .sizePick {
+      .size-content {
+        .box,
+        .text {
+          min-width: 35px;
+          height: 35px;
+          background-color: rgba($color-text-3, 0.3);
+          border: none;
+        }
+        .outOfStock {
+          background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M1 0 L0 1 L99 100 L100 99' fill='' /><path d='M0 99 L99 0 L100 1 L1 100' fill='' /></svg>");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 100% 100%, auto;
+
+          .text {
+            background-color: rgba($color-text-3, 0.1);
+          }
+        }
+        .box:focus,
+        .box.focus {
+          background-color: var(--theme-color-light7);
+        }
+      }
+    }
+    // }
+
+    .quantity {
+      input {
+        width: 50px;
+        height: 35px;
+      }
+    }
+  }
+
+  // 3. PRODUCT ADDITIONAL INFORMATION (BOTTOM)
+  .additional-info {
+    .top-bar {
+      border-bottom: 1px solid $color-text-3;
+
+      .nav-item {
+        font-size: 20px;
+        padding: 0 20px;
+
+        a {
+          color: $color-text-6;
+        }
+
+        .active {
+          color: $color-text-1;
+          background-color: transparent;
+        }
+      }
+    }
+
+    .content {
+      .additionalInfo {
+        div span {
+          display: inline-block;
+          min-width: 85px;
+          margin: 0 27px 0 0;
+          color: $color-text-1;
+        }
+      }
+    }
+  }
+}

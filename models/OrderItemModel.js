@@ -19,6 +19,15 @@ const orderItemSchema = mongoose.Schema({
   },
 });
 
+// orderItemSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "product",
+//     select: "name category image sku variation",
+//   });
+
+//   next();
+// });
+
 const OrderItem = mongoose.model("order_items", orderItemSchema);
 
 module.exports = OrderItem;

@@ -1,0 +1,56 @@
+.sidebar {
+  margin-top: 138px;
+
+  .title {
+    font-size: 20px;
+  }
+
+  &-product-card {
+    .image {
+      // width: 50px;
+      height: 60px;
+      overflow: hidden;
+      object-fit: cover;
+      object-position: center;
+
+      img {
+        width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+      }
+    }
+    a:hover {
+      color: initial;
+    }
+    .old-price {
+      color: $color-text-3;
+      text-decoration: line-through;
+      font-size: 14px;
+    }
+    .sale-price {
+      color: $global-color-4;
+      font-size: 14px;
+    }
+  }
+}
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    margin-top: 0;
+
+    .image {
+      height: 100px;
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 868px) {
+  .sidebar {
+    margin-top: 190px;
+    .wrapper {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: -10px;
+    }
+  }
+}

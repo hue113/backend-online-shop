@@ -13,7 +13,7 @@ userRouter.post("/login", authController.login);
 userRouter.get("/logout", authController.logout);
 userRouter.post("/forgotPassword", authController.forgotPassword);
 userRouter.patch("/resetPassword/:token", authController.resetPassword);
-// userRouter.get("/checkemail/:email", userController.checkEmail);
+userRouter.get("/checkemail/:email", userController.checkEmail);
 
 // 2. routes require authentication for user
 userRouter.use(authController.protect);

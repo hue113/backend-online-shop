@@ -80,14 +80,6 @@ orderSchema.method("toJSON", function () {
   return { ...result, id };
 });
 
-orderSchema.pre(/^find/, function (next) {
-  this.populate("User").populate({
-    path: "Products",
-    select: "name",
-  });
-  next();
-});
-
 const Order = mongoose.model("orders", orderSchema);
 
 module.exports = Order;

@@ -8,7 +8,7 @@ const reviewSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    min: 1,
+    min: 0,
     max: 5,
   },
   createdAt: {
@@ -33,7 +33,7 @@ reviewSchema.method("toJSON", function () {
   return { ...result, id };
 });
 
-// combination of tour-user must be unique
+// combination of review-user must be unique
 reviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
 reviewSchema.pre(/^find/, function (next) {
@@ -82,11 +82,11 @@ reviewSchema.statics.calcAverageRatings = async function (productId) {
 // ko dung pre-save --> vi current review is not in the database yet
 reviewSchema.post("save", function () {
   // this points to current review
-  // this.constructor.calcAverageRatings(this.tour);
+  // this.constructor.calcAverageRatings(this.product);
 });
 
 reviewSchema.post(/^findOneAnd/, async (doc) => {
-  // if (doc) await doc.constructor.calcAverageRatings(doc.tour);
+  // if (doc) await doc.constructor.calcAverageRatings(doc.product);
 });
 
 const Review = mongoose.model("reviews", reviewSchema);

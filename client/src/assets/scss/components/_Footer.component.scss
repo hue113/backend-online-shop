@@ -1,0 +1,16 @@
+.footer {
+  background-color: $color-bg-3;
+  color: $color-text-2;
+  position: static;
+
+  .title {
+    color: $color-text-2;
+    font-size: 18px;
+  }
+
+  a,
+  span {
+    color: $color-text-3;
+    font-size: 14px;
+  }
+}

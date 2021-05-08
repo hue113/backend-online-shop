@@ -13,16 +13,19 @@ const productSchema = new mongoose.Schema({
     ],
     minlength: [5, "A product name must have more or equal then 5 characters"],
   },
+  sku: {
+    type: String,
+    required: [true, "A product must have a sku code"],
+  },
   price: {
     type: Number,
     required: [true, "A product must have a price"],
     min: 0,
   },
-  discount: {
-    type: Number,
-    required: [true, "A product must have a discount between 0 and 100"],
-    min: 0,
-    max: 100,
+  isSale: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   isNewItem: { type: Boolean, default: true },
   isFeatured: { type: Boolean, default: false },
@@ -44,6 +47,7 @@ const productSchema = new mongoose.Schema({
       image: { type: String, required: true },
       size: [{ name: String, stock: Number }],
       price: { type: Number, required: true },
+      discount: { type: Number, required: true },
     },
   ],
 });

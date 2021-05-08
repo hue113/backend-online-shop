@@ -4,6 +4,7 @@
 
 const User = require("../models/UserModel");
 const Order = require("../models/OrderModel");
+const Product = require("../models/ProductModel");
 const Review = require("../models/ReviewModel");
 
 const AppError = require("../utils/appError");
@@ -89,15 +90,14 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.checkEmail = async (req, res, next) => {
+exports.checkEmail = catchAsync(async (req, res, next) => {
   const checkEmailExisted = await User.find({ email: req.params.email });
-  // console.log(req.params.email);
 
   res.status(200).json({
     status: "success",
     data: checkEmailExisted.length,
   });
-};
+});
 
 // for user; update email, name, address only & not for updating password
 exports.updateMe = catchAsync(async (req, res, next) => {
@@ -142,7 +142,12 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 // for user to get their orders
 exports.getMyOrders = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const data = await Order.find({ user: id });
+  const data = await Order.find({ user: id })
+    .populate({
+      path: "items",
+      populate: { path: "product" },
+    })
+    .sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",
@@ -186,7 +191,7 @@ exports.deleteMyOrder = catchAsync(async (req, res, next) => {
 // for user to get their reviews
 exports.getMyReviews = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const data = await Review.find({ user: id });
+  const data = await Review.find({ user: id }).sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",

@@ -33,12 +33,46 @@ exports.getProducts = catchAsync(async (req, res, next) => {
           data: newProducts,
         });
         break;
+
       case "sale":
-        const saleProducts = await Product.find({ discount: { $ne: 0 } });
+        const products = await Product.find();
+        var saleVariations = [];
+        products.map((i) => {
+          return i.variation.map((el) =>
+            el.discount === 0
+              ? ""
+              : saleVariations.push({
+                  id: i.id,
+                  sku: i.sku,
+                  name: `${i.name} - ${el.color}`,
+                  price: i.price,
+                  isSale: true,
+                  offerEnd: i.offerEnd,
+                  isNewItem: i.isNewItem,
+                  isFeatured: i.isFeatured,
+                  rating: i.rating,
+                  saleCount: i.saleCount,
+                  category: i.category,
+                  tag: i.tag,
+                  variation: [
+                    {
+                      color: el.color,
+                      image: el.image,
+                      price: el.price,
+                      discount: el.discount,
+                      size: el.size,
+                    },
+                  ],
+                  image: i.image,
+                  shortDescription: i.shortDescription,
+                  fullDescription: i.fullDescription,
+                })
+          );
+        });
         res.status(200).json({
           status: "success",
-          results: saleProducts.length,
-          data: saleProducts,
+          results: saleVariations.length,
+          data: saleVariations,
         });
         break;
 
@@ -101,6 +135,7 @@ exports.getProductByUrl = catchAsync(async (req, res, next) => {
     {
       $addFields: {
         name: { $toString: "$name" },
+        id: "$_id",
       },
     },
     {
